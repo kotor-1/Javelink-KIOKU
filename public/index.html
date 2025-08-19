@@ -744,6 +744,237 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+        
+        /* ========== モバイル最適化（≤430px） ========== */
+        @media (max-width: 430px) {
+            :root { 
+                --pad: 8px; 
+                --gap: 8px; 
+                --radius: 10px; 
+                --chip-pad: 4px 8px; 
+                --chip-gap: 6px; 
+            }
+            
+            body { 
+                padding: var(--pad); 
+                font-size: clamp(12px, 3.5vw, 14px);
+            }
+            
+            /* 背景演出OFF（描画コスト削減） */
+            .sun, .cloud, .ocean, .wave, .seagull, .javelin-item, .beach-ball { 
+                display: none !important; 
+            }
+            
+            /* タイトル簡略化 */
+            .title-container { 
+                margin: 0 0 var(--gap) 0; 
+                text-align: center;
+            }
+            
+            .main-title { 
+                font-size: clamp(16px, 5.5vw, 20px); 
+                letter-spacing: 1px; 
+                margin: 0; 
+                line-height: 1.2;
+            }
+            
+            .subtitle { 
+                display: none; 
+            }
+            
+            /* カードの軽量化 */
+            .surfboard-card { 
+                padding: var(--pad); 
+                border-radius: var(--radius); 
+                border-width: 2px; 
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                margin: 0;
+            }
+            
+            /* アップロードゾーン */
+            .upload-zone { 
+                padding: 18px 12px; 
+                border-radius: var(--radius); 
+                margin: var(--gap) 0;
+            }
+            
+            /* 動画プレビュー */
+            .video-container { 
+                display: block; 
+                background: #000; 
+                border-radius: 8px; 
+                overflow: hidden; 
+                margin: var(--gap) 0;
+            }
+            
+            .video-container video { 
+                width: 100%; 
+                height: auto; 
+                aspect-ratio: 16/9; 
+                max-height: min(35vh, 220px); 
+                border-radius: 0;
+            }
+            
+            /* 身長入力（モバイルでは非表示） */
+            .height-input-row { 
+                display: none; 
+            }
+            
+            /* 設定ボタン（右上） */
+            .settings-trigger { 
+                position: absolute; 
+                top: 6px; 
+                right: 6px; 
+                font-size: 18px; 
+                background: rgba(255,255,255,0.9);
+                border-radius: 50%;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 10;
+            }
+            
+            /* 解析ボタン */
+            .analyze-button { 
+                width: 100%; 
+                height: 44px; 
+                padding: 0 12px; 
+                border-radius: 999px; 
+                font-size: 14px; 
+                margin: var(--gap) 0; 
+                min-height: 36px;
+            }
+            
+            /* メーター1本化 */
+            #meters { 
+                display: grid; 
+                gap: 6px; 
+                margin: var(--gap) 0;
+            }
+            
+            #meters .bar { 
+                height: 8px; 
+                border-radius: 999px; 
+                overflow: hidden; 
+                background: #E9EEF5; 
+            }
+            
+            #meters .fill { 
+                height: 100%; 
+                width: 0%; 
+                background: linear-gradient(90deg, #41DAB5, #4AA3FF); 
+                transition: width 0.3s ease;
+            }
+            
+            /* 結果のチップ化 */
+            .results-container { 
+                margin-top: var(--gap); 
+            }
+            
+            .results-title { 
+                display: none; 
+            }
+            
+            .results-grid {
+                display: flex; 
+                flex-wrap: wrap; 
+                gap: var(--chip-gap);
+                margin: var(--gap) 0; 
+                padding: 0;
+            }
+            
+            .result-item {
+                border: 1px solid #E5E7EB; 
+                border-radius: 999px; 
+                padding: var(--chip-pad);
+                background: #fff; 
+                box-shadow: none; 
+                display: inline-flex; 
+                align-items: center; 
+                gap: 6px;
+                min-height: 36px;
+                white-space: nowrap;
+            }
+            
+            .result-label { 
+                color: #4B5563; 
+                font-size: 12px; 
+                margin: 0; 
+            }
+            
+            .result-value-unit { 
+                display: flex; 
+                align-items: center; 
+                gap: 2px; 
+            }
+            
+            .result-value-unit .result-value, 
+            .result-value-unit .result-unit { 
+                font-size: 12px; 
+                font-weight: 700; 
+                background: none; 
+                -webkit-text-fill-color: currentColor; 
+                color: #2C3E50;
+            }
+            
+            .result-description { 
+                display: none; 
+            }
+            
+            /* 設定モーダル */
+            .settings-modal { 
+                display: none; 
+                position: fixed; 
+                top: 0; 
+                left: 0; 
+                width: 100%; 
+                height: 100%; 
+                background: rgba(0,0,0,0.5); 
+                z-index: 1000;
+            }
+            
+            .settings-modal.show { 
+                display: flex; 
+                align-items: center; 
+                justify-content: center; 
+            }
+            
+            .settings-content { 
+                background: white; 
+                border-radius: 12px; 
+                padding: 16px; 
+                width: 92vw; 
+                max-width: 360px; 
+                max-height: 80vh; 
+                overflow-y: auto;
+            }
+            
+            .settings-header { 
+                display: flex; 
+                justify-content: space-between; 
+                align-items: center; 
+                margin-bottom: 16px; 
+                padding-bottom: 8px; 
+                border-bottom: 1px solid #E5E7EB;
+            }
+            
+            .settings-close { 
+                background: none; 
+                border: none; 
+                font-size: 20px; 
+                cursor: pointer; 
+                color: #6B7280;
+            }
+            
+            /* フォーム要素のズーム防止 */
+            input[type="number"], 
+            input[type="text"] { 
+                font-size: 16px !important; 
+            }
+        }
     </style>
 </head>
 <body>
@@ -879,12 +1110,14 @@
     <!-- メインコンテンツ -->
     <div class="container">
         <div class="title-container">
-            <h1 class="main-title">KIOKU</h1>
-            <h1 class="main-title" style="font-size: 3rem; margin-top: -1rem;">JAVELINK</h1>
-            <p class="subtitle">🏖️ 小学生から大人まで対応したジャベ全種目解析 🌺</p>
+            <h1 class="main-title">🌊 KIOKU JAVELINK</h1>
+            <p class="subtitle">ジャベ全種目解析 - 湘南スタイル</p>
         </div>
         
         <div class="surfboard-card">
+            <!-- 設定ボタン（モバイル用） -->
+            <div class="settings-trigger" id="settingsTrigger" style="display: none;">⚙</div>
+            
             <!-- アップロードエリア -->
             <div class="upload-zone" id="uploadZone">
                 <div class="upload-icon">🎥</div>
@@ -904,6 +1137,13 @@
                 <div style="font-size:0.8em; color:#5A6C7D; margin-top:5px;">身長を入力すると、投げ出し高さがcm単位で正確に表示されます</div>
             </div>
             
+            <!-- 動画プレビューコンテナ -->
+            <div class="video-container" id="videoContainer" style="display: none;">
+                <video id="videoPreview" controls style="width: 100%; height: auto; border-radius: 8px;">
+                    お使いのブラウザは動画再生に対応していません。
+                </video>
+            </div>
+            
             <!-- 動画情報表示 -->
             <div id="videoInfoRow" style="display:none; margin:10px 0; padding:10px; background:#F0F8FF; border-radius:8px; border:1px solid #40E0D0;">
                 <div style="font-weight:700; color:#2C3E50; margin-bottom:5px;">📹 動画情報</div>
@@ -911,9 +1151,19 @@
             </div>
             
             <!-- 解析ボタン -->
-            <button class="analyze-button" id="analyzeBtn">
+            <button class="analyze-button" id="analyzeBtn" style="display: none;">
                 🚀 解析スタート！
             </button>
+            
+            <!-- メーター表示（モバイル用） -->
+            <div id="meters" style="display: none;">
+                <div class="bar">
+                    <div class="fill" id="meterFill"></div>
+                </div>
+                <div style="text-align: center; font-size: 12px; color: #6B7280;">
+                    <span id="meterText">準備中...</span>
+                </div>
+            </div>
             
             <!-- プログレスバー -->
             <div class="progress-container" id="progressContainer">
@@ -986,6 +1236,25 @@
     
     <!-- 隠しCanvas -->
     <canvas id="analysisCanvas"></canvas>
+    
+    <!-- 設定モーダル（モバイル用） -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <div class="settings-header">
+                <h3>設定</h3>
+                <button class="settings-close" id="settingsClose">&times;</button>
+            </div>
+            <div class="height-input-row">
+                <div style="font-weight:700; color:#2C3E50; margin-bottom:10px;">📏 身長を入力してください（より正確な測定のため）</div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+                    <label style="color:#2C3E50; font-weight:bold;">身長(cm)：</label>
+                    <input type="number" id="userHeight" step="1" value="140" style="width:6rem; padding:8px; border:2px solid #FFD700; border-radius:5px; text-align:center;">
+                    <button id="saveHeightBtn" style="padding:8px 16px; background:#FF6B35; color:white; border:none; border-radius:5px; cursor:pointer;">保存</button>
+                </div>
+                <div style="font-size:0.8em; color:#5A6C7D; margin-top:5px;">身長を入力すると、投げ出し高さがcm単位で正確に表示されます</div>
+            </div>
+        </div>
+    </div>
     
     <script>
         // Video Analyzer Class
@@ -2022,9 +2291,125 @@
         
         // DOM読み込み完了時に初期化
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeHeightInput);
+            document.addEventListener('DOMContentLoaded', () => {
+                initializeHeightInput();
+                initializeMobileOptimization();
+                initializeSettingsModal();
+            });
         } else {
             initializeHeightInput();
+            initializeMobileOptimization();
+            initializeSettingsModal();
+        }
+        
+        // モバイル表示の検出と設定
+        function initializeMobileOptimization() {
+            const isMobile = window.matchMedia('(max-width: 430px)').matches;
+            
+            if (isMobile) {
+                // 設定ボタンを表示
+                const settingsTrigger = document.getElementById('settingsTrigger');
+                if (settingsTrigger) {
+                    settingsTrigger.style.display = 'flex';
+                }
+                
+                // 身長入力行を非表示
+                const heightInputRow = document.querySelector('.height-input-row');
+                if (heightInputRow) {
+                    heightInputRow.style.display = 'none';
+                }
+                
+                // 結果ラベルを略称に変更
+                updateResultLabels();
+            }
+        }
+        
+        // 結果ラベルを略称に変更
+        function updateResultLabels() {
+            const labels = {
+                'releaseAngle': '角',
+                'releaseHeight': '高',
+                'plantToRelease': 'PR',
+                'releaseSpeed': '速',
+                'shoulderHipSeparation': '分'
+            };
+            
+            Object.entries(labels).forEach(([id, shortLabel]) => {
+                const labelElement = document.querySelector(`#${id}`).closest('.result-item').querySelector('.result-label');
+                if (labelElement) {
+                    labelElement.textContent = shortLabel;
+                }
+            });
+        }
+        
+        // 設定モーダルの制御
+        function initializeSettingsModal() {
+            const settingsTrigger = document.getElementById('settingsTrigger');
+            const settingsModal = document.getElementById('settingsModal');
+            const settingsClose = document.getElementById('settingsClose');
+            
+            if (settingsTrigger && settingsModal && settingsClose) {
+                settingsTrigger.addEventListener('click', () => {
+                    settingsModal.classList.add('show');
+                });
+                
+                settingsClose.addEventListener('click', () => {
+                    settingsModal.classList.remove('show');
+                });
+                
+                // モーダル外クリックで閉じる
+                settingsModal.addEventListener('click', (e) => {
+                    if (e.target === settingsModal) {
+                        settingsModal.classList.remove('show');
+                    }
+                });
+            }
+        }
+        
+        // メーター統合（変換・解析を1本に）
+        function updateMeter(progress, text, isTranscoding = false) {
+            const meterFill = document.getElementById('meterFill');
+            const meterText = document.getElementById('meterText');
+            const meters = document.getElementById('meters');
+            
+            if (meterFill && meterText && meters) {
+                meters.style.display = 'block';
+                meterFill.style.width = `${progress}%`;
+                meterText.textContent = text;
+                
+                // 変換中は青寄り、解析中は緑寄り
+                if (isTranscoding) {
+                    meterFill.style.background = 'linear-gradient(90deg, #4AA3FF, #41DAB5)';
+                } else {
+                    meterFill.style.background = 'linear-gradient(90deg, #41DAB5, #4AA3FF)';
+                }
+            }
+        }
+        
+        // 変換進捗を更新
+        function setTranscodeProgress(progress) {
+            const transcodeBar = document.getElementById('transcodeBar');
+            const transcodeText = document.getElementById('transcodeText');
+            if (transcodeBar && transcodeText) {
+                transcodeBar.style.width = progress + '%';
+                transcodeText.textContent = `変換中... ${progress}%`;
+            }
+            
+            // モバイル用メーター統合
+            updateMeter(progress, `変換中... ${progress}%`, true);
+        }
+        
+        // 解析進捗を更新
+        function setAnalyzeProgress(progress) {
+            const analyzeBar = document.getElementById('analyzeBar');
+            const analyzeText = document.getElementById('analyzeText');
+            if (analyzeBar && analyzeText) {
+                analyzeBar.style.width = progress + '%';
+                analyzeText.textContent = `解析中... ${progress}%`;
+            }
+            
+            // モバイル用メーター統合
+            updateMeter(progress, `解析中... ${progress}%`, false);
         }
         
         // ========== VideoAnalyzer に URLロード関数を追加 ==========
