@@ -54,7 +54,7 @@
             width: 100%;
             height: 150px;
             background: linear-gradient(180deg, transparent, #1E90FF);
-            z-index: -1;
+            z-index: 1;
         }
         
         .wave {
@@ -147,6 +147,8 @@
             cursor: pointer;
             transition: transform 0.3s;
             filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+            display: block !important; /* 確実に表示 */
+            opacity: 1; /* 透明度を確実に設定 */
         }
         
         .javelin-item:hover {
@@ -234,6 +236,34 @@
             color: #2C3E50;
             font-size: 0.95rem;
             font-weight: 700;
+        }
+        
+        /* プログレスバー/スライダー装飾 */
+        .progress-slider {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 107, 53, 0.2);
+            border-radius: 2px;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-slider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 60%;
+            background: linear-gradient(90deg, #FF6B35, #FFD700);
+            border-radius: 2px;
+            animation: slide-progress 3s ease-in-out infinite;
+        }
+        
+        @keyframes slide-progress {
+            0%, 100% { width: 20%; }
+            50% { width: 80%; }
         }
         
         /* サーフボード型のカード */
@@ -778,8 +808,15 @@
             }
             
             /* 背景演出は軽量化：海/雲は非表示でもOKだが、競技SVGは表示 */
-            .sun, .cloud, .ocean, .wave, .seagull, .beach-ball { 
+            .sun, .cloud, .ocean, .wave, .seagull { 
                 display: none !important; 
+            }
+            
+            /* ビーチボールは表示 */
+            .beach-ball { 
+                display: block !important; 
+                animation: none !important;
+                opacity: 0.8;
             }
             
             /* 競技SVGは表示（静止推奨） */
@@ -787,11 +824,15 @@
                 display: block !important; 
                 animation: none !important; 
                 z-index: 3; 
-                opacity: 0.9; 
+                opacity: 0.9;
+                position: fixed !important;
+                visibility: visible !important;
             }
             
             .javelin-ball, .turbo-jav, .javelin-spear { 
                 display: block !important; 
+                visibility: visible !important;
+                opacity: 1 !important;
             }
             
             /* コンテナとカード */
@@ -926,7 +967,7 @@
             }
             
             /* 説明テキストを表示（省略しない） */
-            .result-description { 
+            .result-description, .result-desc { 
                 display: block; 
                 font-size: clamp(11px, 3.1vw, 13px); 
                 color: #6B7280; 
@@ -1002,6 +1043,13 @@
     <div class="cloud cloud1"></div>
     <div class="cloud cloud2"></div>
     <div class="seagull">🦅</div>
+    
+    <!-- 波のアニメーション -->
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
     
     <!-- ジャベリック用品 -->
     <svg class="javelin-item javelin-ball" title="ジャベリックボール" viewBox="0 0 150 100" style="width: 100px; height: 67px; top: 25%; left: 10%;">
@@ -1119,18 +1167,12 @@
     <div class="beach-ball beach-ball1"></div>
     <div class="beach-ball beach-ball2"></div>
     
-    <!-- 波のアニメーション -->
-    <div class="ocean">
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-    </div>
-    
     <!-- メインコンテンツ -->
     <div class="container">
         <div class="title-container">
             <h1 class="main-title">🌊 KIOKU JAVELINK</h1>
             <p class="subtitle">ジャベ全種目解析 - 湘南スタイル</p>
+            <div class="progress-slider"></div>
         </div>
         
         <div class="surfboard-card">
