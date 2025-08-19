@@ -1,0 +1,22 @@
+{
+  "name": "javelink-kioku",
+  "version": "1.0.0",
+  "description": "投擲動作解析アプリ - 完全静的サイト版",
+  "main": "public/index.html",
+  "scripts": {
+    "serve": "npx http-server public -p 5173 -c-1",
+    "dev": "npx http-server public -p 5173 -c-1 --cors",
+    "start": "npx http-server public -p 3000 -c-1"
+  },
+  "keywords": [
+    "javelin",
+    "motion-analysis",
+    "video-processing",
+    "static-site"
+  ],
+  "author": "Javelink Team",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

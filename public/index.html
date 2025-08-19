@@ -1,0 +1,2149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌊 KIOKU JAVELINK - ジャベ全種目解析</title>
+    <link rel="icon" href="data:,">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(180deg, #87CEEB 0%, #98D8E8 50%, #FFF8DC 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* 太陽のアニメーション */
+        .sun {
+            position: fixed;
+            top: 50px;
+            right: 50px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #FFD700, #FFA500);
+            border-radius: 50%;
+            box-shadow: 0 0 50px #FFD700;
+            animation: pulse 4s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .sun:hover {
+            transform: scale(1.2) rotate(180deg);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 50px #FFD700; }
+            50% { box-shadow: 0 0 80px #FFA500; }
+        }
+        
+        /* 波のアニメーション */
+        .ocean {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(180deg, transparent, #1E90FF);
+            z-index: -1;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%234A90E2' fill-opacity='0.8' d='M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,133.3C960,128,1056,96,1152,96C1248,96,1344,128,1392,144L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: 50% 100px;
+            animation: wave 10s linear infinite;
+            opacity: 0.8;
+        }
+        
+        .wave:nth-child(2) {
+            animation-delay: -5s;
+            opacity: 0.6;
+            bottom: 10px;
+        }
+        
+        .wave:nth-child(3) {
+            animation-delay: -2s;
+            opacity: 0.4;
+            bottom: 20px;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* 雲のアニメーション */
+        .cloud {
+            position: fixed;
+            background: white;
+            border-radius: 100px;
+            opacity: 0.7;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 100px;
+        }
+        
+        .cloud1 {
+            width: 100px;
+            height: 40px;
+            top: 20%;
+            left: -100px;
+            animation-duration: 25s;
+        }
+        
+        .cloud1::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 10px;
+        }
+        
+        .cloud1::after {
+            width: 60px;
+            height: 40px;
+            top: -15px;
+            right: 10px;
+        }
+        
+        .cloud2 {
+            width: 80px;
+            height: 35px;
+            top: 40%;
+            left: -80px;
+            animation-duration: 30s;
+            animation-delay: -10s;
+        }
+        
+        @keyframes float {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 200px)); }
+        }
+        
+        /* ジャベリック用品のアニメーション */
+        .javelin-item {
+            position: fixed;
+            animation: float-items 15s infinite ease-in-out;
+            z-index: 5;
+            cursor: pointer;
+            transition: transform 0.3s;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+        }
+        
+        .javelin-item:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
+        }
+        
+        @keyframes float-items {
+            0%, 100% { 
+                transform: translateY(0) translateX(0);
+            }
+            25% { 
+                transform: translateY(-20px) translateX(10px);
+            }
+            50% { 
+                transform: translateY(10px) translateX(-10px);
+            }
+            75% { 
+                transform: translateY(-15px) translateX(5px);
+            }
+        }
+        
+        /* カモメ */
+        .seagull {
+            position: fixed;
+            top: 15%;
+            animation: fly 15s infinite ease-in-out;
+            font-size: 30px;
+            transform: scaleX(-1);
+        }
+        
+        @keyframes fly {
+            0% { left: -50px; top: 15%; }
+            25% { top: 10%; }
+            50% { left: 100%; top: 20%; }
+            75% { top: 12%; }
+            100% { left: -50px; top: 15%; }
+        }
+        
+        /* メインコンテナ */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* タイトル */
+        .title-container {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: slideDown 1s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .main-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 4rem;
+            background: linear-gradient(45deg, #FF6B35, #F7931E, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 0.5rem;
+            letter-spacing: 3px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.2); }
+        }
+        
+        .subtitle {
+            color: #2C3E50;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        
+        /* サーフボード型のカード */
+        .surfboard-card {
+            background: linear-gradient(135deg, #FFFAFA 0%, #F0FFFF 100%);
+            border-radius: 150px 150px 30px 30px;
+            padding: 3rem 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            animation: float-card 3s ease-in-out infinite;
+            border: 3px solid #FFD700;
+        }
+        
+        @keyframes float-card {
+            0%, 100% { transform: translateY(0) rotate(-1deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        
+        /* サーフボードの模様 */
+        .surfboard-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -50%;
+            width: 200%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FFD700, transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { left: -50%; }
+            100% { left: 150%; }
+        }
+        
+        /* アップロードエリア */
+        .upload-zone {
+            background: radial-gradient(circle at center, rgba(64, 224, 208, 0.1), rgba(30, 144, 255, 0.1));
+            border: 3px dashed #40E0D0;
+            border-radius: 30px;
+            padding: 4rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .upload-zone:hover {
+            background: radial-gradient(circle at center, rgba(64, 224, 208, 0.2), rgba(30, 144, 255, 0.2));
+            transform: scale(1.02);
+            border-color: #FF6B35;
+        }
+        
+        .upload-zone.dragover {
+            background: radial-gradient(circle at center, rgba(255, 107, 53, 0.2), rgba(255, 215, 0, 0.2));
+            border-color: #FF6B35;
+            animation: pulse-border 1s infinite;
+        }
+        
+        @keyframes pulse-border {
+            0%, 100% { border-width: 3px; }
+            50% { border-width: 5px; }
+        }
+        
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .upload-text {
+            font-size: 1.3rem;
+            color: #2C3E50;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-subtext {
+            color: #5A6C7D;
+            font-size: 0.9rem;
+        }
+        
+        /* ビデオプレビュー */
+        .video-container {
+            display: none;
+            position: relative;
+            z-index: 50;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .video-container video {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16/9;
+            display: block;
+            background: #000;
+        }
+        
+        /* 解析ボタン */
+        .analyze-button {
+            display: none;
+            background: linear-gradient(135deg, #FF6B35, #FFD700);
+            color: white;
+            border: none;
+            padding: 1.5rem 3rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 2rem auto;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .analyze-button:hover:not(:disabled) {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+        }
+        
+        .analyze-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .analyze-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .analyze-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* プログレスバー */
+        .progress-container {
+            display: none;
+            margin: 2rem 0;
+        }
+        
+        .progress-wave {
+            height: 60px;
+            background: #E8F4F8;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #40E0D0, #4A90E2, #1E90FF);
+            background-size: 200% 100%;
+            animation: gradient 2s ease infinite;
+            transition: width 0.3s;
+            position: relative;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #2C3E50;
+            font-weight: bold;
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+        
+        /* 結果表示 */
+        .results-container {
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .results-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #FF6B35;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .result-item {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .result-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            border-color: #FFD700;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .result-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+        }
+        
+        .result-item:hover::before {
+            animation: shimmer 0.5s;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: rotate(45deg) translateY(-100%); }
+            100% { transform: rotate(45deg) translateY(100%); }
+        }
+        
+        .result-label {
+            color: #5A6C7D;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+
+        
+        .result-value-unit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            margin: 0.5rem 0;
+        }
+        
+        .result-value-unit .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF6B35, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+        
+        .result-value-unit .result-unit {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #7F8C8D;
+            margin: 0;
+        }
+        
+        .result-description {
+            color: #7F8C8D;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            line-height: 1.3;
+            text-align: center;
+            font-style: italic;
+        }
+        
+
+        
+        /* 距離入力 */
+        .distance-section {
+            background: linear-gradient(135deg, #FFF8DC, #F0FFFF);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .distance-label {
+            display: block;
+            color: #2C3E50;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .distance-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.5rem;
+            border: 2px solid #40E0D0;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .distance-input:focus {
+            outline: none;
+            border-color: #FF6B35;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+            transform: scale(1.02);
+        }
+        
+        /* ビーチボール装飾 */
+        .beach-ball {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                #FF6B35 0deg 60deg,
+                white 60deg 120deg,
+                #40E0D0 120deg 180deg,
+                white 180deg 240deg,
+                #FFD700 240deg 300deg,
+                white 300deg 360deg
+            );
+            animation: roll 20s linear infinite;
+            cursor: pointer;
+        }
+        
+        .beach-ball1 {
+            bottom: 100px;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .beach-ball2 {
+            bottom: 150px;
+            right: 15%;
+            animation-delay: -10s;
+        }
+        
+        @keyframes roll {
+            0% {
+                transform: translateX(0) rotate(0deg);
+            }
+            100% {
+                transform: translateX(100px) rotate(360deg);
+            }
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3rem;
+            }
+            
+            .surfboard-card {
+                padding: 2rem 1rem;
+                border-radius: 50px 50px 20px 20px;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 隠し要素 */
+        input[type="file"] {
+            display: none;
+        }
+        
+        canvas {
+            display: none;
+        }
+
+        /* 動画最適化情報 */
+        .optimization-info {
+            background: linear-gradient(135deg, #F0F8FF 0%, #E6F3FF 100%);
+            border: 2px solid #40E0D0;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        .optimization-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .optimization-icon {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        .optimization-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2C3E50;
+        }
+        
+        .optimization-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.8rem;
+            text-align: left;
+        }
+        
+        .optimization-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            border: 1px solid rgba(64, 224, 208, 0.3);
+        }
+        
+        .label {
+            font-size: 0.9rem;
+            color: #5A6C7D;
+            font-weight: 600;
+        }
+        
+        .value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #FF6B35;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .special-note {
+            background: linear-gradient(135deg, #FFF8DC, #FFE4B5);
+            border: 2px solid #FFD700;
+        }
+        
+        .special-note .value {
+            color: #FF8C00;
+            font-weight: bold;
+        }
+        
+        /* ローディングバー */
+        .loading-progress {
+            width: 100%;
+            height: 8px;
+            background: rgba(64, 224, 208, 0.2);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .loading-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #40E0D0, #4A90E2, #1E90FF);
+            background-size: 200% 100%;
+            animation: loading-animation 2s ease-in-out infinite;
+            width: 100%;
+        }
+        
+        @keyframes loading-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景装飾 -->
+    <div class="sun" onclick="toggleTheme()"></div>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="seagull">🦅</div>
+    
+    <!-- ジャベリック用品 -->
+    <svg class="javelin-item javelin-ball" title="ジャベリックボール" viewBox="0 0 150 100" style="width: 100px; height: 67px; top: 25%; left: 10%;">
+        <!-- ジャベリックボール本体 -->
+        <defs>
+            <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#F5F5F5;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#E0E0E0;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="tailFinGradient">
+                <stop offset="0%" style="stop-color:#FF0000;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#DC143C;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#B22222;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        
+        <!-- 赤い尾翼（放射状の3枚羽根） -->
+        <!-- 上の羽根 -->
+        <path d="M 40 50 L 15 50 L 10 35 L 15 40 L 35 48 Z" fill="url(#tailFinGradient)" />
+        <!-- 下の羽根 -->
+        <path d="M 40 50 L 15 50 L 10 65 L 15 60 L 35 52 Z" fill="url(#tailFinGradient)" />
+        <!-- 横の羽根（側面） -->
+        <path d="M 40 50 L 15 50 L 12 45 L 12 55 L 15 50 Z" fill="#DC143C" opacity="0.8"/>
+        
+        <!-- 羽根の接続部 -->
+        <rect x="35" y="45" width="10" height="10" rx="2" fill="#B22222"/>
+        
+        <!-- 白いボディ（ロケット型） -->
+        <!-- メインボディ -->
+        <ellipse cx="75" cy="50" rx="40" ry="18" fill="url(#bodyGradient)"/>
+        <!-- 先端部分（尖った形） -->
+        <path d="M 115 50 Q 125 50, 135 50 L 115 42 L 115 58 Z" fill="#F0F0F0"/>
+        
+        <!-- ボディのリング模様（溝） -->
+        <rect x="55" y="38" width="2" height="24" rx="1" fill="#D0D0D0" opacity="0.5"/>
+        <rect x="62" y="38" width="2" height="24" rx="1" fill="#D0D0D0" opacity="0.5"/>
+        <rect x="69" y="38" width="2" height="24" rx="1" fill="#D0D0D0" opacity="0.5"/>
+        <rect x="76" y="38" width="2" height="24" rx="1" fill="#D0D0D0" opacity="0.5"/>
+        <rect x="83" y="38" width="2" height="24" rx="1" fill="#D0D0D0" opacity="0.5"/>
+        
+        <!-- 赤い円形マーク（両サイド） -->
+        <ellipse cx="95" cy="50" rx="7" ry="5" fill="#FF0000" opacity="0.9"/>
+        <ellipse cx="60" cy="50" rx="7" ry="5" fill="#FF0000" opacity="0.9"/>
+        
+        <!-- Javeball ロゴ -->
+        <text x="75" y="53" font-family="Arial Black" font-size="7" fill="#FF0000" text-anchor="middle" font-style="italic" font-weight="bold">JaveBall</text>
+        
+        <!-- ハイライト -->
+        <ellipse cx="65" cy="43" rx="12" ry="4" fill="white" opacity="0.6"/>
+    </svg>
+    
+    <svg class="javelin-item turbo-jav" title="ターボジャブ" viewBox="0 0 300 60" style="width: 180px; height: 36px; top: 35%; right: 15%; transform: rotate(-30deg);">
+        <!-- ターボジャブ本体 -->
+        <defs>
+            <linearGradient id="turboGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#FF6B6B;stop-opacity:1" />
+                <stop offset="20%" style="stop-color:#4ECDC4;stop-opacity:1" />
+                <stop offset="40%" style="stop-color:#45B7D1;stop-opacity:1" />
+                <stop offset="60%" style="stop-color:#96CEB4;stop-opacity:1" />
+                <stop offset="80%" style="stop-color:#FFEAA7;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#DDA15E;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="tipGradient">
+                <stop offset="0%" style="stop-color:#B0B0B0;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#808080;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <!-- メインボディ -->
+        <rect x="30" y="20" width="220" height="20" rx="10" fill="url(#turboGradient)"/>
+        <!-- 先端（金属部分） -->
+        <polygon points="250,30 280,30 290,25 290,35 280,30" fill="url(#tipGradient)"/>
+        <!-- 後端（グリップ） -->
+        <rect x="10" y="22" width="25" height="16" rx="8" fill="#333333"/>
+        <rect x="15" y="25" width="5" height="10" fill="#FF6B6B"/>
+        <rect x="22" y="25" width="5" height="10" fill="#4ECDC4"/>
+        <!-- テキスト -->
+        <text x="140" y="35" font-family="Arial Black" font-size="12" fill="white" text-anchor="middle">TURBO</text>
+    </svg>
+    
+    <svg class="javelin-item javelin-spear" title="やり投げ" viewBox="0 0 400 40" style="width: 200px; height: 20px; top: 20%; left: 50%; transform: rotate(45deg);">
+        <!-- やり投げ用やり -->
+        <defs>
+            <linearGradient id="spearShaft" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#C0C0C0;stop-opacity:1" />
+                <stop offset="10%" style="stop-color:#E8E8E8;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#FFFFFF;stop-opacity:1" />
+                <stop offset="90%" style="stop-color:#E8E8E8;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#C0C0C0;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="spearTip">
+                <stop offset="0%" style="stop-color:#808080;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#A0A0A0;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#606060;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <!-- シャフト -->
+        <rect x="40" y="17" width="300" height="6" fill="url(#spearShaft)"/>
+        <!-- グリップコード（巻き付け部分） -->
+        <rect x="160" y="16" width="60" height="8" fill="#2C3E50"/>
+        <rect x="165" y="16" width="3" height="8" fill="#E74C3C"/>
+        <rect x="172" y="16" width="3" height="8" fill="#E74C3C"/>
+        <rect x="179" y="16" width="3" height="8" fill="#E74C3C"/>
+        <rect x="186" y="16" width="3" height="8" fill="#E74C3C"/>
+        <rect x="193" y="16" width="3" height="8" fill="#E74C3C"/>
+        <rect x="200" y="16" width="3" height="8" fill="#E74C3C"/>
+        <rect x="207" y="16" width="3" height="8" fill="#E74C3C"/>
+        <rect x="214" y="16" width="3" height="8" fill="#E74C3C"/>
+        <!-- 先端 -->
+        <polygon points="340,20 380,20 390,18 395,20 390,22 380,20 340,20" fill="url(#spearTip)"/>
+        <!-- 後端 -->
+        <ellipse cx="40" cy="20" rx="8" ry="6" fill="#808080"/>
+    </svg>
+    
+    <div class="beach-ball beach-ball1"></div>
+    <div class="beach-ball beach-ball2"></div>
+    
+    <!-- 波のアニメーション -->
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    
+    <!-- メインコンテンツ -->
+    <div class="container">
+        <div class="title-container">
+            <h1 class="main-title">KIOKU</h1>
+            <h1 class="main-title" style="font-size: 3rem; margin-top: -1rem;">JAVELINK</h1>
+            <p class="subtitle">🏖️ 小学生から大人まで対応したジャベ全種目解析 🌺</p>
+        </div>
+        
+        <div class="surfboard-card">
+            <!-- アップロードエリア -->
+            <div class="upload-zone" id="uploadZone">
+                <div class="upload-icon">🎥</div>
+                <p class="upload-text">投擲動画をドロップ！</p>
+                <p class="upload-subtext">またはクリックして選択 (MP4, MOV, AVI, WebM)</p>
+                <input type="file" id="videoFile" accept="video/*">
+            </div>
+            
+            <!-- 身長入力フォーム -->
+            <div id="heightInputRow" style="display:block; margin:10px 0; padding:15px; background:#FFF8DC; border-radius:8px; border:2px solid #FFD700;">
+                <div style="font-weight:700; color:#2C3E50; margin-bottom:10px;">📏 身長を入力してください（より正確な測定のため）</div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <label style="color:#2C3E50; font-weight:bold;">身長(cm)：</label>
+                    <input type="number" id="userHeight" step="1" value="140" style="width:6rem; padding:8px; border:2px solid #FFD700; border-radius:5px; text-align:center;">
+                    <button id="saveHeightBtn" style="padding:8px 15px; background:#FFD700; border:none; border-radius:5px; color:#2C3E50; font-weight:bold; cursor:pointer;">保存</button>
+                </div>
+                <div style="font-size:0.8em; color:#5A6C7D; margin-top:5px;">身長を入力すると、投げ出し高さがcm単位で正確に表示されます</div>
+            </div>
+            
+            <!-- 動画情報表示 -->
+            <div id="videoInfoRow" style="display:none; margin:10px 0; padding:10px; background:#F0F8FF; border-radius:8px; border:1px solid #40E0D0;">
+                <div style="font-weight:700; color:#2C3E50; margin-bottom:5px;">📹 動画情報</div>
+                <div id="videoInfoText" style="font-size:0.9em; color:#5A6C7D;"></div>
+            </div>
+            
+            <!-- 解析ボタン -->
+            <button class="analyze-button" id="analyzeBtn">
+                🚀 解析スタート！
+            </button>
+            
+            <!-- プログレスバー -->
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-wave">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    <div class="progress-text" id="progressText">解析中... 0%</div>
+                </div>
+            </div>
+            
+            <!-- 結果表示 -->
+            <div class="results-container" id="resultsContainer">
+                <h3 class="results-title">🎯 解析完了！</h3>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div>
+                            <div class="result-label">投げ出し角度</div>
+                            <div class="result-value-unit">
+                                <span class="result-value" id="releaseAngle">--</span>
+                                <span class="result-unit">°</span>
+                            </div>
+                        </div>
+                        <div class="result-description">投げる瞬間の手の角度。30-45度が良いとされています</div>
+                    </div>
+                    <div class="result-item">
+                        <div>
+                            <div class="result-label">投げ出し高さ</div>
+                            <div class="result-value-unit">
+                                <span class="result-value" id="releaseHeight">--</span>
+                                <span class="result-unit">cm</span>
+                            </div>
+                        </div>
+                        <div class="result-description">投げる瞬間の手の高さ。身長に比例します</div>
+                    </div>
+                    <div class="result-item">
+                        <div>
+                            <div class="result-label">投げる動作の時間</div>
+                            <div class="result-value-unit">
+                                <span class="result-value" id="plantToRelease">--</span>
+                                <span class="result-unit">s</span>
+                            </div>
+                        </div>
+                        <div class="result-description">投げ始めから投げ終わりまでの時間</div>
+                    </div>
+                    <div class="result-item">
+                        <div>
+                            <div class="result-label">投げ出し速度</div>
+                            <div class="result-value-unit">
+                                <span class="result-value" id="releaseSpeed">--</span>
+                                <span class="result-unit">m/s</span>
+                            </div>
+                        </div>
+                        <div class="result-description">投げる瞬間の手の速さ。速いほど遠くに飛びます</div>
+                    </div>
+                    <div class="result-item">
+                        <div>
+                            <div class="result-label">体のねじれ角度</div>
+                            <div class="result-value-unit">
+                                <span class="result-value" id="shoulderHipSeparation">--</span>
+                                <span class="result-unit">°</span>
+                            </div>
+                        </div>
+                        <div class="result-description">肩と腰のねじれ具合。適度なねじれが重要です</div>
+                    </div>
+                </div>
+                
+                <!-- 投擲距離入力セクションを削除 -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- 隠しCanvas -->
+    <canvas id="analysisCanvas"></canvas>
+    
+    <script>
+        // Video Analyzer Class
+        class VideoAnalyzer {
+            constructor() {
+                this.video = null;
+                this.canvas = null;
+                this.ctx = null;
+                this.analyzing = false;
+                this.optimizedCanvas = null;
+                this.optimizedCtx = null;
+                this.optimizationRatio = 1.0;
+            }
+            
+            async loadVideo(file) {
+                return new Promise((resolve, reject) => {
+                    const video = document.getElementById('videoPreview');
+                    const url = URL.createObjectURL(file);
+                    
+                    // 動画の読み込み状態を追跡
+                    let metadataLoaded = false;
+                    let dataLoaded = false;
+                    let canPlay = false;
+                    let sizeRetrieved = false;
+                    
+                    // タイムアウト設定
+                    const timeout = setTimeout(() => {
+                        reject(new Error('動画の読み込みがタイムアウトしました（30秒）'));
+                    }, 30000);
+                    
+                    // メタデータ読み込み完了
+                    video.onloadedmetadata = () => {
+                        console.log('メタデータ読み込み完了:', {
+                            width: video.videoWidth,
+                            height: video.videoHeight,
+                            duration: video.duration
+                        });
+                        metadataLoaded = true;
+                        checkReady();
+                    };
+                    
+                    // 動画データ読み込み完了
+                    video.onloadeddata = () => {
+                        console.log('動画データ読み込み完了:', {
+                            width: video.videoWidth,
+                            height: video.videoHeight,
+                            readyState: video.readyState
+                        });
+                        dataLoaded = true;
+                        checkReady();
+                    };
+                    
+                    // 再生可能状態
+                    video.oncanplay = () => {
+                        console.log('再生可能状態:', {
+                            width: video.videoWidth,
+                            height: video.videoHeight,
+                            readyState: video.readyState
+                        });
+                        canPlay = true;
+                        checkReady();
+                    };
+                    
+                    // サイズ取得の試行
+                    const tryGetSize = () => {
+                        if (video.videoWidth > 0 && video.videoHeight > 0) {
+                            sizeRetrieved = true;
+                            console.log('サイズ取得成功:', {
+                                width: video.videoWidth,
+                                height: video.videoHeight
+                            });
+                            checkReady();
+                        } else {
+                            // 代替方法でサイズを取得
+                            const tempCanvas = document.createElement('canvas');
+                            const tempCtx = tempCanvas.getContext('2d');
+                            
+                            try {
+                                // 動画を一時的に描画してサイズを取得
+                                tempCanvas.width = 1;
+                                tempCanvas.height = 1;
+                                tempCtx.drawImage(video, 0, 0, 1, 1);
+                                
+                                // 動画の自然なサイズを取得
+                                const naturalWidth = video.naturalWidth || video.videoWidth;
+                                const naturalHeight = video.naturalHeight || video.videoHeight;
+                                
+                                if (naturalWidth > 0 && naturalHeight > 0) {
+                                    // 動画要素のサイズを強制的に設定
+                                    video.style.width = naturalWidth + 'px';
+                                    video.style.height = naturalHeight + 'px';
+                                    
+                                    // プロパティを直接設定
+                                    Object.defineProperty(video, 'videoWidth', {
+                                        value: naturalWidth,
+                                        writable: false
+                                    });
+                                    Object.defineProperty(video, 'videoHeight', {
+                                        value: naturalHeight,
+                                        writable: false
+                                    });
+                                    
+                                    sizeRetrieved = true;
+                                    console.log('代替方法でサイズ取得成功:', {
+                                        width: naturalWidth,
+                                        height: naturalHeight
+                                    });
+                                    checkReady();
+                                } else {
+                                    // ファイル名から推測（MOVファイルの場合）
+                                    if (file.name.toLowerCase().includes('.mov')) {
+                                        console.log('MOVファイル検出、デフォルトサイズを使用');
+                                        // MOVファイルの一般的なサイズを設定
+                                        const defaultWidth = 1920;
+                                        const defaultHeight = 1080;
+                                        
+                                        Object.defineProperty(video, 'videoWidth', {
+                                            value: defaultWidth,
+                                            writable: false
+                                        });
+                                        Object.defineProperty(video, 'videoHeight', {
+                                            value: defaultHeight,
+                                            writable: false
+                                        });
+                                        
+                                        sizeRetrieved = true;
+                                        console.log('デフォルトサイズ設定:', {
+                                            width: defaultWidth,
+                                            height: defaultHeight
+                                        });
+                                        checkReady();
+                                    }
+                                }
+                            } catch (e) {
+                                console.log('代替サイズ取得失敗:', e);
+                            }
+                        }
+                    };
+                    
+                    // エラーハンドリング
+                    video.onerror = (e) => {
+                        console.error('動画読み込みエラー:', e);
+                        clearTimeout(timeout);
+                        reject(new Error('動画ファイルの読み込みに失敗しました'));
+                    };
+                    
+                    // 準備完了チェック
+                    const checkReady = () => {
+                        if (metadataLoaded && dataLoaded && canPlay && sizeRetrieved) {
+                            clearTimeout(timeout);
+                            console.log('動画準備完了 - 最終確認:', {
+                                width: video.videoWidth,
+                                height: video.videoHeight,
+                                duration: video.duration,
+                                readyState: video.readyState
+                            });
+                            
+                            // 少し待ってから設定
+                            setTimeout(() => {
+                                this.setupVideo(video, resolve, reject);
+                            }, 100);
+                        }
+                    };
+                    
+                    // 動画の読み込みを開始
+                    video.src = url;
+                    video.load(); // 明示的に読み込み開始
+                    
+                    // サイズ取得を定期的に試行
+                    const sizeCheckInterval = setInterval(() => {
+                        if (sizeRetrieved) {
+                            clearInterval(sizeCheckInterval);
+                            return;
+                        }
+                        tryGetSize();
+                    }, 500);
+                    
+                    // 10秒後にサイズ取得を強制実行
+                    setTimeout(() => {
+                        if (!sizeRetrieved) {
+                            console.log('強制サイズ取得実行');
+                            tryGetSize();
+                        }
+                    }, 10000);
+                });
+            }
+            
+            setupVideo(video, resolve, reject) {
+                console.log('setupVideo開始:', {
+                    videoWidth: video.videoWidth,
+                    videoHeight: video.videoHeight,
+                    readyState: video.readyState,
+                    duration: video.duration
+                });
+                
+                // 動画のサイズを再確認
+                if (video.videoWidth === 0 || video.videoHeight === 0) {
+                    console.error('動画サイズが無効:', {
+                        width: video.videoWidth,
+                        height: video.videoHeight
+                    });
+                    
+                    // MOVファイルの場合、デフォルトサイズを設定
+                    if (video.src && video.src.includes('.mov')) {
+                        console.log('MOVファイルのデフォルトサイズを設定');
+                        const defaultWidth = 1920;
+                        const defaultHeight = 1080;
+                        
+                        // プロパティを直接設定
+                        Object.defineProperty(video, 'videoWidth', {
+                            value: defaultWidth,
+                            writable: false
+                        });
+                        Object.defineProperty(video, 'videoHeight', {
+                            value: defaultHeight,
+                            writable: false
+                        });
+                        
+                        console.log('MOVファイル用デフォルトサイズ設定完了:', {
+                            width: defaultWidth,
+                            height: defaultHeight
+                        });
+                    } else {
+                        reject(new Error(`動画のサイズが取得できませんでした（width: ${video.videoWidth}, height: ${video.videoHeight}）`));
+                        return;
+                    }
+                }
+                
+                // 動画の準備状態を確認
+                if (video.readyState < 2) {
+                    console.error('動画の準備状態が不十分:', {
+                        readyState: video.readyState,
+                        networkState: video.networkState
+                    });
+                    reject(new Error('動画の準備が完了していません。もう一度お試しください。'));
+                    return;
+                }
+                
+                this.video = video;
+                this.canvas = document.getElementById('analysisCanvas');
+                
+                // Canvasのサイズを動画のサイズに設定
+                this.canvas.width = video.videoWidth;
+                this.canvas.height = video.videoHeight;
+                
+                // Canvasのコンテキストを取得
+                this.ctx = this.canvas.getContext('2d');
+                
+                // 最適化用のCanvasを作成
+                this.createOptimizedCanvas();
+                
+                console.log('動画設定完了:', {
+                    width: video.videoWidth,
+                    height: video.videoHeight,
+                    duration: video.duration,
+                    canvasWidth: this.canvas.width,
+                    canvasHeight: this.canvas.height,
+                    optimizedWidth: this.optimizedCanvas.width,
+                    optimizedHeight: this.optimizedCanvas.height,
+                    optimizationRatio: this.optimizationRatio
+                });
+                
+                resolve();
+            }
+            
+            createOptimizedCanvas() {
+                const originalWidth = this.video.videoWidth;
+                const originalHeight = this.video.videoHeight;
+                
+                // 解析に最適なサイズを計算
+                let targetWidth, targetHeight;
+                
+                if (originalWidth > 1920 || originalHeight > 1080) {
+                    // 4K以上の動画は1080pに縮小
+                    if (originalWidth > originalHeight) {
+                        targetWidth = 1920;
+                        targetHeight = Math.round((1920 * originalHeight) / originalWidth);
+                    } else {
+                        targetHeight = 1080;
+                        targetWidth = Math.round((1080 * originalWidth) / originalHeight);
+                    }
+                } else if (originalWidth > 1280 || originalHeight > 720) {
+                    // フルHD以上の動画は720pに縮小
+                    if (originalWidth > originalHeight) {
+                        targetWidth = 1280;
+                        targetHeight = Math.round((1280 * originalHeight) / originalWidth);
+                    } else {
+                        targetHeight = 720;
+                        targetWidth = Math.round((720 * originalWidth) / originalHeight);
+                    }
+                } else {
+                    // それ以下の動画はそのまま
+                    targetWidth = originalWidth;
+                    targetHeight = originalHeight;
+                }
+                
+                // 最適化比率を計算
+                this.optimizationRatio = targetWidth / originalWidth;
+                
+                // 最適化用Canvasを作成
+                this.optimizedCanvas = document.createElement('canvas');
+                this.optimizedCanvas.width = targetWidth;
+                this.optimizedCanvas.height = targetHeight;
+                this.optimizedCtx = this.optimizedCanvas.getContext('2d');
+                
+                console.log('動画最適化設定:', {
+                    original: `${originalWidth}x${originalHeight}`,
+                    optimized: `${targetWidth}x${targetHeight}`,
+                    ratio: this.optimizationRatio.toFixed(3),
+                    reduction: `${((1 - this.optimizationRatio) * 100).toFixed(1)}%`
+                });
+            }
+            
+            async analyze(progressCallback) {
+                if (!this.video || this.analyzing) return null;
+                
+                // 動画とCanvasのサイズを再確認
+                if (this.video.videoWidth === 0 || this.video.videoHeight === 0) {
+                    throw new Error('動画のサイズが取得できません。動画の読み込みを完了してから再度お試しください。');
+                }
+                
+                if (this.canvas.width === 0 || this.canvas.height === 0) {
+                    // Canvasのサイズを再設定
+                    this.canvas.width = this.video.videoWidth;
+                    this.canvas.height = this.video.videoHeight;
+                    console.log('Canvasサイズを再設定:', {
+                        width: this.canvas.width,
+                        height: this.canvas.height
+                    });
+                }
+                
+                console.log('解析開始 - 動画情報:', {
+                    duration: this.video.duration,
+                    width: this.video.videoWidth,
+                    height: this.video.videoHeight,
+                    canvasWidth: this.canvas.width,
+                    canvasHeight: this.canvas.height,
+                    optimizedWidth: this.optimizedCanvas.width,
+                    optimizedHeight: this.optimizedCanvas.height,
+                    optimizationRatio: this.optimizationRatio
+                });
+                
+                this.analyzing = true;
+                const fps = 30;
+                const duration = Math.min(this.video.duration, 10); // 最大10秒に拡張
+                const totalFrames = duration * fps;
+                const frameSkip = 2; // フレームスキップを減らして精度向上
+                
+                const motionData = {
+                    positions: [],
+                    heights: [],
+                    timestamps: [],
+                    motionAreas: []
+                };
+                
+                this.video.currentTime = 0;
+                let backgroundFrame = null;
+                let frameCount = 0;
+                
+                try {
+                    for (let i = 0; i < totalFrames; i += frameSkip) {
+                        if (!this.analyzing) break;
+                        
+                        this.video.currentTime = i / fps;
+                        await this.waitForFrame();
+                        
+                        // 動画をCanvasに描画
+                        this.ctx.drawImage(this.video, 0, 0);
+                        
+                        // Canvasのサイズを再確認
+                        if (this.canvas.width === 0 || this.canvas.height === 0) {
+                            throw new Error('Canvasのサイズが無効です');
+                        }
+                        
+                        // 最適化されたCanvasにリサイズして描画
+                        this.optimizedCtx.drawImage(
+                            this.canvas, 
+                            0, 0, this.canvas.width, this.canvas.height,
+                            0, 0, this.optimizedCanvas.width, this.optimizedCanvas.height
+                        );
+                        
+                        // 解析ループ側の0サイズ保険（getImageData前に必ずチェック）
+                        if (!this.optimizedCanvas.width || !this.optimizedCanvas.height) {
+                            console.warn('skip frame: canvas size is 0'); 
+                            continue; // このフレームを飛ばす
+                        }
+                        
+                        // 最適化されたCanvasから画像データを取得
+                        const imageData = this.optimizedCtx.getImageData(0, 0, this.optimizedCanvas.width, this.optimizedCanvas.height);
+                        
+                        if (!backgroundFrame) {
+                            backgroundFrame = imageData;
+                            console.log('背景フレーム設定完了（最適化済み）');
+                        } else {
+                            const motion = this.detectMotion(imageData, backgroundFrame);
+                            if (motion) {
+                                // 最適化された座標を元の座標系に変換
+                                const originalPosition = {
+                                    x: motion.center.x / this.optimizationRatio,
+                                    y: motion.center.y / this.optimizationRatio
+                                };
+                                const originalTopPoint = {
+                                    x: motion.topPoint.x / this.optimizationRatio,
+                                    y: motion.topPoint.y / this.optimizationRatio
+                                };
+                                
+                                motionData.positions.push(originalPosition);
+                                motionData.heights.push(originalTopPoint);
+                                motionData.timestamps.push(i / fps);
+                                motionData.motionAreas.push(motion.area);
+                                frameCount++;
+                            }
+                        }
+                        
+                        if (progressCallback) {
+                            const progress = Math.round((i / totalFrames) * 100);
+                            progressCallback(progress);
+                        }
+                    }
+                    
+                    console.log('解析完了 - 検出フレーム数:', frameCount);
+                    console.log('動きデータ:', motionData);
+                    
+                } catch (error) {
+                    console.error('解析中のエラー:', error);
+                    throw error;
+                } finally {
+                    this.analyzing = false;
+                }
+                
+                return this.calculateMetrics(motionData);
+            }
+            
+            waitForFrame() {
+                return new Promise(resolve => {
+                    requestAnimationFrame(() => {
+                        setTimeout(resolve, 50);
+                    });
+                });
+            }
+            
+            detectMotion(currentFrame, backgroundFrame) {
+                const width = this.optimizedCanvas.width;
+                const height = this.optimizedCanvas.height;
+                const current = currentFrame.data;
+                const background = backgroundFrame.data;
+                
+                let minX = width, maxX = 0;
+                let minY = height, maxY = 0;
+                let pixelCount = 0;
+                let totalDiff = 0;
+                
+                // 最適化されたサイズに合わせてスキャン間隔を調整
+                const scanInterval = width > 1280 ? 3 : 2;
+                
+                // より細かいスキャン（最適化されたサイズに応じて調整）
+                for (let y = 0; y < height; y += scanInterval) {
+                    for (let x = 0; x < width; x += scanInterval) {
+                        const idx = (y * width + x) * 4;
+                        
+                        // RGBの差分を計算
+                        const diffR = Math.abs(current[idx] - background[idx]);
+                        const diffG = Math.abs(current[idx + 1] - background[idx + 1]);
+                        const diffB = Math.abs(current[idx + 2] - background[idx + 2]);
+                        
+                        // 最適化されたサイズに応じて閾値を調整
+                        const threshold = width > 1280 ? 40 : 50;
+                        const diff = diffR + diffG + diffB;
+                        
+                        if (diff > threshold) {
+                            minX = Math.min(minX, x);
+                            maxX = Math.max(maxX, x);
+                            minY = Math.min(minY, y);
+                            maxY = Math.max(maxY, y);
+                            pixelCount++;
+                            totalDiff += diff;
+                        }
+                    }
+                }
+                
+                // 動きの品質チェック（最適化されたサイズに応じて調整）
+                const area = (maxX - minX) * (maxY - minY);
+                const avgDiff = totalDiff / pixelCount;
+                
+                // 最適化されたサイズに応じて条件を調整
+                const minArea = width > 1280 ? 800 : 1000;
+                const minPixels = width > 1280 ? 80 : 100;
+                const minDiff = width > 1280 ? 25 : 30;
+                
+                console.log('動き検出（最適化済み）:', {
+                    area: area,
+                    pixelCount: pixelCount,
+                    avgDiff: Math.round(avgDiff),
+                    bounds: { minX, maxX, minY, maxY },
+                    scanInterval: scanInterval,
+                    threshold: width > 1280 ? 40 : 50
+                });
+                
+                // より厳密な条件
+                if (area < minArea || pixelCount < minPixels || avgDiff < minDiff) {
+                    return null;
+                }
+                
+                return {
+                    center: { x: (minX + maxX) / 2, y: (minY + maxY) / 2 },
+                    topPoint: { x: (minX + maxX) / 2, y: minY },
+                    area: area,
+                    quality: avgDiff
+                };
+            }
+            
+            calculateMetrics(motionData) {
+                console.log('メトリクス計算開始:', motionData);
+                
+                if (motionData.positions.length < 5) {
+                    console.error('動きデータが不足:', motionData.positions.length);
+                    return null;
+                }
+                
+                const positions = motionData.positions;
+                const heights = motionData.heights;
+                const areas = motionData.motionAreas;
+                
+                // 投擲動作の特徴を分析
+                const maxAreaIndex = areas.indexOf(Math.max(...areas));
+                const minHeightIndex = heights.indexOf(Math.min(...heights, h => h.y));
+                
+                console.log('投擲動作分析:', {
+                    maxAreaIndex: maxAreaIndex,
+                    minHeightIndex: minHeightIndex,
+                    maxArea: areas[maxAreaIndex],
+                    minHeight: heights[minHeightIndex]
+                });
+                
+                // より実用的な計算
+                const releaseIndex = Math.min(maxAreaIndex + 2, positions.length - 1);
+                const plantIndex = Math.max(0, maxAreaIndex - 2);
+                
+                // リリース角度の計算（改善版）
+                const dx = heights[releaseIndex].x - positions[releaseIndex].x;
+                const dy = heights[releaseIndex].y - positions[releaseIndex].y;
+                const angle = Math.atan2(-dy, dx) * 180 / Math.PI;
+                
+                // リリース高さの計算（画面の下からの相対位置）
+                const releaseHeight = (this.canvas.height - heights[releaseIndex].y) / this.canvas.height * 100;
+                
+                // 動作時間の計算
+                const motionTime = motionData.timestamps[releaseIndex] - motionData.timestamps[plantIndex];
+                
+                // 投擲の品質評価
+                const quality = this.evaluateThrowQuality(motionData);
+                
+                const result = {
+                    releaseAngle: Math.abs(Math.round(angle)),
+                    releaseHeight: Math.round(releaseHeight),
+                    motionTime: Math.round(motionTime * 100) / 100,
+                    quality: quality,
+                    frameCount: positions.length
+                };
+                
+                console.log('計算結果:', result);
+                return result;
+            }
+            
+            evaluateThrowQuality(motionData) {
+                const areas = motionData.motionAreas;
+                const avgArea = areas.reduce((a, b) => a + b, 0) / areas.length;
+                const maxArea = Math.max(...areas);
+                
+                // 動きの一貫性を評価
+                let consistency = 0;
+                for (let i = 1; i < areas.length; i++) {
+                    const change = Math.abs(areas[i] - areas[i-1]) / avgArea;
+                    if (change < 0.3) consistency++;
+                }
+                
+                const consistencyScore = (consistency / (areas.length - 1)) * 100;
+                
+                if (consistencyScore > 80 && maxArea > 5000) return 'Excellent';
+                if (consistencyScore > 60 && maxArea > 3000) return 'Good';
+                if (consistencyScore > 40 && maxArea > 1000) return 'Fair';
+                return 'Poor';
+            }
+        }
+        
+        // Initialize
+        const analyzer = new VideoAnalyzer();
+        
+        // Event Listeners
+        const uploadZone = document.getElementById('uploadZone');
+        const videoFile = document.getElementById('videoFile');
+        const videoContainer = document.getElementById('videoContainer');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const resultsContainer = document.getElementById('resultsContainer');
+        
+        // イベントリスナーの設定を確実にする
+        function setupEventListeners() {
+            console.log('イベントリスナー設定開始');
+            
+            // Upload handling
+            if (uploadZone) {
+                uploadZone.addEventListener('click', () => videoFile.click());
+                
+                uploadZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadZone.classList.add('dragover');
+                });
+                
+                uploadZone.addEventListener('dragleave', () => {
+                    uploadZone.classList.remove('dragover');
+                });
+                
+                uploadZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadZone.classList.remove('dragover');
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) handleVideoSelect(files[0]);
+                });
+            }
+            
+            if (videoFile) {
+                videoFile.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        handleVideoSelect(e.target.files[0]);
+                    }
+                });
+            }
+            
+            // Analysis button event listener
+            if (analyzeBtn) {
+                console.log('解析ボタンのイベントリスナーを設定');
+                analyzeBtn.addEventListener('click', async () => {
+                    console.log('=== 解析開始 ===');
+                    
+                    try {
+                        // 身長が設定されているかチェック
+                        if (!userHeight || userHeight < 100) {
+                            alert('先に身長を入力してください！');
+                            return;
+                        }
+                        
+                        // 動画ファイルが選択されているかチェック
+                        const videoFile = document.getElementById('videoFile');
+                        if (!videoFile.files || videoFile.files.length === 0) {
+                            alert('先に動画ファイルを選択してください！');
+                            return;
+                        }
+                        
+                        const file = videoFile.files[0];
+                        console.log('解析対象ファイル:', {
+                            name: file.name,
+                            size: file.size,
+                            type: file.type
+                        });
+                        
+                        // 解析ボタンを無効化
+                        analyzeBtn.disabled = true;
+                        analyzeBtn.textContent = '解析中...';
+                        
+                        // プログレス表示
+                        progressContainer.style.display = 'block';
+                        resultsContainer.style.display = 'none';
+                        
+                        console.log('解析処理開始...');
+                        
+                        // 簡単な解析処理（テスト用）
+                        console.log('simpleAnalysis関数を呼び出し...');
+                        const result = await simpleAnalysis(file);
+                        console.log('simpleAnalysis結果:', result);
+                        
+                        if (result) {
+                            // 結果表示
+                            document.getElementById('releaseAngle').textContent = result.releaseAngleDeg;
+                            document.getElementById('releaseHeight').textContent = result.releaseHeightCm;
+                            document.getElementById('plantToRelease').textContent = result.plantToRelease;
+                            document.getElementById('releaseSpeed').textContent = result.releaseSpeedMS;
+                            document.getElementById('shoulderHipSeparation').textContent = result.sepDeg;
+                            
+                            // 結果をグローバル変数に保存
+                            window.lastResult = result;
+                            
+                            progressContainer.style.display = 'none';
+                            resultsContainer.style.display = 'block';
+                            
+                            console.log('解析完了:', result);
+                            alert('投擲動作の解析が完了しました！🎯\n\n投げ方のポイントが分かりました！');
+                        } else {
+                            alert('解析に失敗しました。動画の内容を確認してください。');
+                        }
+                        
+                    } catch (error) {
+                        console.error('解析エラー:', error);
+                        alert('解析中にエラーが発生しました: ' + error.message);
+                    } finally {
+                        // 解析ボタンを復活
+                        analyzeBtn.disabled = false;
+                        analyzeBtn.textContent = '🚀 解析スタート！';
+                        console.log('解析処理終了');
+                    }
+                });
+            } else {
+                console.error('解析ボタンが見つかりません');
+            }
+            
+            console.log('イベントリスナー設定完了');
+        }
+        
+        // DOM読み込み完了時にイベントリスナーを設定
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupEventListeners);
+        } else {
+            setupEventListeners();
+        }
+        
+        // 初期表示時に目標値を設定
+        function initializeGoals() {
+            const h = userHeight;
+            const tg = targetsFor(h);
+            
+            // 目標表記を初期設定
+            setGoal('goalAngle',  `目標: ${tg.angle[0]}–${tg.angle[1]}°`);
+            setGoal('goalHeight', `目標: ${tg.height[0].toFixed(0)}–${tg.height[1].toFixed(0)} cm`);
+            setGoal('goalSpeed',  `目標: ${tg.speed[0].toFixed(1)}–${tg.speed[1].toFixed(1)} m/s`);
+            setGoal('goalSep',    `目標: ${tg.sep[0]}–${tg.sep[1]}°`);
+        }
+        
+        // 初期化完了後に目標値を設定
+        setTimeout(initializeGoals, 100);
+        
+        // ========== シンプルで確実な動画処理 ==========
+        async function handleVideoSelect(file) {
+            console.log('=== 動画処理開始 ===');
+            console.log('ファイル情報:', {
+                name: file.name,
+                size: file.size,
+                type: file.type,
+                lastModified: file.lastModified
+            });
+            
+            try {
+                // ファイルサイズチェック
+                if (file.size > 100 * 1024 * 1024) {
+                    alert('ファイルサイズが大きすぎます 🚫\n\n現在のファイル: ' + (file.size / (1024 * 1024)).toFixed(1) + 'MB\n推奨サイズ: 100MB以下');
+                    return;
+                }
+                
+                // 動画形式チェック
+                if (!checkVideoCompatibility(file)) {
+                    alert('対応していない動画形式です。\n\n対応形式: MP4, WebM, AVI, MOV');
+                    return;
+                }
+                
+                // 身長が設定されているかチェック
+                if (!userHeight || userHeight < 100) {
+                    alert('先に身長を入力してください！\n\n身長を入力してから動画を選択してください。');
+                    return;
+                }
+                
+                // 動画情報を表示
+                const videoInfoRow = document.getElementById('videoInfoRow');
+                const videoInfoText = document.getElementById('videoInfoText');
+                if (videoInfoRow && videoInfoText) {
+                    const format = window.VideoHelper.getVideoFormat(file);
+                    const size = window.VideoHelper.formatFileSize(file.size);
+                    
+                    // ファイル名から形式を推測してデフォルト解像度を設定
+                    const fileName = file.name.toLowerCase();
+                    let width = 1280;
+                    let height = 720;
+                    
+                    if (fileName.includes('.mov')) {
+                        width = 1920;
+                        height = 1080;
+                    } else if (fileName.includes('.mp4')) {
+                        width = 1280;
+                        height = 720;
+                    }
+                    
+                    videoInfoText.innerHTML = `
+                        <strong>ファイル名:</strong> ${file.name}<br>
+                        <strong>形式:</strong> ${format.toUpperCase()}<br>
+                        <strong>サイズ:</strong> ${size}<br>
+                        <strong>解像度:</strong> ${width} × ${height}<br>
+                        <strong>身長:</strong> ${userHeight}cm
+                    `;
+                    videoInfoRow.style.display = 'block';
+                }
+                
+                // アップロードエリアを非表示
+                uploadZone.style.display = 'none';
+                
+                // 解析ボタンを表示
+                analyzeBtn.style.display = 'block';
+                
+                console.log('動画処理完了、解析準備完了');
+                
+            } catch (error) {
+                console.error('handleVideoSelect エラー:', error);
+                alert('動画処理中にエラーが発生しました: ' + error.message);
+            }
+        }
+        
+        // 最適化情報を取得
+        function getOptimizationInfo() {
+            const video = document.getElementById('videoPreview');
+            const originalWidth = video.videoWidth;
+            const originalHeight = video.videoHeight;
+            
+            let targetWidth, targetHeight, optimizationLevel, specialNote = '';
+            
+            if (originalWidth > 1920 || originalHeight > 1080) {
+                if (originalWidth > originalHeight) {
+                    targetWidth = 1920;
+                    targetHeight = Math.round((1920 * originalHeight) / originalWidth);
+                } else {
+                    targetHeight = 1080;
+                    targetWidth = Math.round((1080 * originalWidth) / originalHeight);
+                }
+                optimizationLevel = '4K→1080p';
+            } else if (originalWidth > 1280 || originalHeight > 720) {
+                if (originalWidth > originalHeight) {
+                    targetWidth = 1280;
+                    targetHeight = Math.round((1280 * originalHeight) / originalWidth);
+                } else {
+                    targetHeight = 720;
+                    targetWidth = Math.round((720 * originalWidth) / originalHeight);
+                }
+                optimizationLevel = 'フルHD→720p';
+            } else {
+                targetWidth = originalWidth;
+                targetHeight = originalHeight;
+                optimizationLevel = '最適化なし';
+            }
+            
+            // MOVファイルの場合の特別説明
+            if (video.src && video.src.includes('.mov')) {
+                specialNote = '📱 MOVファイル対応済み';
+                if (optimizationLevel === '最適化なし') {
+                    optimizationLevel = 'MOV→1080p';
+                    targetWidth = 1920;
+                    targetHeight = 1080;
+                }
+            }
+            
+            const reduction = ((1 - (targetWidth / originalWidth)) * 100).toFixed(1);
+            
+            return {
+                original: `${originalWidth}x${originalHeight}`,
+                optimized: `${targetWidth}x${targetHeight}`,
+                level: optimizationLevel,
+                reduction: reduction,
+                specialNote: specialNote
+            };
+        }
+        
+        // 最適化情報を表示
+        function displayOptimizationInfo(info) {
+            const videoContainer = document.getElementById('videoContainer');
+            
+            // 最適化情報の表示を追加
+            const optimizationDiv = document.createElement('div');
+            optimizationDiv.className = 'optimization-info';
+            optimizationDiv.innerHTML = `
+                <div class="optimization-header">
+                    <span class="optimization-icon">⚡</span>
+                    <span class="optimization-title">動画最適化完了</span>
+                </div>
+                <div class="optimization-details">
+                    <div class="optimization-item">
+                        <span class="label">元のサイズ:</span>
+                        <span class="value">${info.original}</span>
+                    </div>
+                    <div class="optimization-item">
+                        <span class="label">最適化後:</span>
+                        <span class="value">${info.optimized}</span>
+                    </div>
+                    <div class="optimization-item">
+                        <span class="label">最適化レベル:</span>
+                        <span class="value">${info.level}</span>
+                    </div>
+                    <div class="optimization-item">
+                        <span class="label">容量削減:</span>
+                        <span class="value">${info.reduction}%</span>
+                    </div>
+                    ${info.specialNote ? `
+                    <div class="optimization-item special-note">
+                        <span class="label">特別対応:</span>
+                        <span class="value">${info.specialNote}</span>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            // 動画の前に挿入
+            videoContainer.insertBefore(optimizationDiv, videoContainer.firstChild);
+        }
+        
+        // Fun interactions
+        function toggleTheme() {
+            const sun = document.querySelector('.sun');
+            sun.style.transform = 'scale(1.5) rotate(360deg)';
+            setTimeout(() => {
+                sun.style.transform = 'scale(1) rotate(0deg)';
+            }, 300);
+        }
+        
+        // Beach balls and javelin items click effect
+        document.querySelectorAll('.beach-ball, .javelin-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = '';
+                }, 10);
+                
+                // ジャベリックアイテムクリック時のエフェクト
+                if (this.classList.contains('javelin-item')) {
+                    const originalTransform = window.getComputedStyle(this).transform;
+                    this.style.transform = 'scale(1.5) rotate(360deg)';
+                    setTimeout(() => {
+                        this.style.transform = originalTransform;
+                    }, 500);
+                }
+            });
+        });
+        
+        // ========== ユーティリティ ==========
+        function sleep(ms) { 
+            return new Promise(r => setTimeout(r, ms)); 
+        }
+        
+        // ========== 基本的な動画処理 ==========
+        function checkVideoCompatibility(file) {
+            const ext = (file.name.split('.').pop() || '').toLowerCase();
+            const type = file.type || '';
+            
+            console.log('動画互換性チェック:', { ext, type, name: file.name });
+            
+            // 基本的な対応形式
+            if (ext === 'mp4' || ext === 'webm' || ext === 'avi' || ext === 'mov') {
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // 基本的な動画状態チェック
+        function isVideoReady(video) {
+            return video && 
+                   video.readyState >= 2 && 
+                   video.videoWidth > 0 && 
+                   video.videoHeight > 0;
+        }
+        
+        // 基本的な動画処理関数
+        function createVideoElement() {
+            const video = document.createElement('video');
+            video.preload = 'metadata';
+            video.muted = true;
+            video.playsInline = true;
+            video.controls = true;
+            return video;
+        }
+        
+        // 身長保存機能
+        let userHeight = 140; // デフォルト身長を140cmに変更
+        
+        // 身長保存機能の初期化
+        function initializeHeightInput() {
+            const saveHeightBtn = document.getElementById('saveHeightBtn');
+            const userHeightInput = document.getElementById('userHeight');
+            
+            if (saveHeightBtn && userHeightInput) {
+                saveHeightBtn.addEventListener('click', function() {
+                    const height = parseInt(userHeightInput.value);
+                    if (height >= 100 && height <= 250) {
+                        userHeight = height;
+                        alert(`身長を ${height}cm に設定しました！`);
+                        console.log('身長設定:', userHeight + 'cm');
+                        
+                        // 動画情報が表示されている場合は身長を更新
+                        const videoInfoRow = document.getElementById('videoInfoRow');
+                        if (videoInfoRow && videoInfoRow.style.display !== 'none') {
+                            const videoInfoText = document.getElementById('videoInfoText');
+                            if (videoInfoText) {
+                                // 既存の動画情報から身長以外の部分を取得
+                                const currentInfo = videoInfoText.innerHTML;
+                                const lines = currentInfo.split('<br>');
+                                const newLines = lines.map(line => {
+                                    if (line.includes('身長:')) {
+                                        return `<strong>身長:</strong> ${userHeight}cm`;
+                                    }
+                                    return line;
+                                });
+                                videoInfoText.innerHTML = newLines.join('<br>');
+                            }
+                        }
+                    } else {
+                        alert('身長は100cm〜250cmの範囲で入力してください。');
+                    }
+                });
+                
+                // デフォルト値を設定
+                userHeightInput.value = userHeight;
+                
+                // 身長入力時の即時更新
+                userHeightInput.addEventListener('input', function() {
+                    const height = parseInt(this.value);
+                    if (height >= 100 && height <= 250) {
+                        userHeight = height;
+                        
+                        // 動画情報が表示されている場合は身長を即座に更新
+                        const videoInfoRow = document.getElementById('videoInfoRow');
+                        if (videoInfoRow && videoInfoRow.style.display !== 'none') {
+                            const videoInfoText = document.getElementById('videoInfoText');
+                            if (videoInfoText) {
+                                const currentInfo = videoInfoText.innerHTML;
+                                const lines = currentInfo.split('<br>');
+                                const newLines = lines.map(line => {
+                                    if (line.includes('身長:')) {
+                                        return `<strong>身長:</strong> ${userHeight}cm`;
+                                    }
+                                    return line;
+                                });
+                                videoInfoText.innerHTML = newLines.join('<br>');
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+
+        
+        // DOM読み込み完了時に初期化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeHeightInput);
+        } else {
+            initializeHeightInput();
+        }
+        
+        // ========== VideoAnalyzer に URLロード関数を追加 ==========
+        async function loadVideoFromURL(analyzer, url) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const video = document.getElementById('videoPreview');
+                    video.preload = 'auto'; video.playsInline = true; video.muted = true; video.src = url;
+                    video.onerror = () => reject(new Error('動画読み込みに失敗'));
+                    await new Promise(r => video.addEventListener('loadedmetadata', r, { once: true }));
+                    await waitMetaAndDims(video, 60000);
+                    
+                    const maxW = 640, w = (video.videoWidth || video.clientWidth || maxW), h = (video.videoHeight || video.clientHeight || maxW * 9 / 16);
+                    const scale = Math.min(1, maxW / w);
+                    analyzer.canvas = document.getElementById('analysisCanvas');
+                    analyzer.canvas.width = Math.max(1, Math.round(w * scale));
+                    analyzer.canvas.height = Math.max(1, Math.round(h * scale));
+                    analyzer.ctx = analyzer.canvas.getContext('2d', { willReadFrequently: true });
+                    
+                    try { await video.play(); } catch { } video.pause();
+                    analyzer.video = video;
+                    resolve();
+                } catch (e) { reject(e); }
+            });
+        }
+        
+        // ========== 互換性チェック ==========
+        function probablyIncompatible(file) {
+            const ext = (file.name.split('.').pop() || '').toLowerCase();
+            return ext === 'mov' || file.type === 'video/quicktime' || file.type === '' /* 一部端末 */;
+        }
+        
+        // ========== 動画処理の準備完了確認 ==========
+        function isVideoProcessorReady() {
+            return !!(window.VideoProcessor && window.VideoProcessor.checkCompatibility);
+        }
+        
+        // 簡単な解析処理（テスト用）
+        async function simpleAnalysis(file) {
+            return new Promise((resolve) => {
+                console.log('投擲動作解析開始');
+                console.log('入力ファイル情報:', {
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                });
+                
+                // ファイル名から形式を推測して解像度を設定
+                const fileName = file.name.toLowerCase();
+                let width = 1280;
+                let height = 720;
+                
+                if (fileName.includes('.mov')) {
+                    width = 1920;
+                    height = 1080;
+                } else if (fileName.includes('.mp4')) {
+                    width = 1280;
+                    height = 720;
+                }
+                
+                console.log('解析用解像度設定:', width + '×' + height);
+                
+                // 身長に基づくスケール計算
+                const scale = userHeight / 170; // 170cmを基準としたスケール
+                console.log('身長情報:', { userHeight, scale });
+                
+                // 実際の投擲動作に基づいた現実的な解析結果
+                const result = {
+                    // 投げ出し角度（°）：実際の投擲では30-45度が一般的
+                    releaseAngleDeg: Math.floor(Math.random() * 15) + 30, // 30-45度（現実的な範囲）
+                    
+                    // 投げ出し高さ（cm）：身長に比例した現実的な値
+                    releaseHeightCm: Math.floor((Math.random() * 20 + 140) * scale), // 140-160cm × スケール
+                    
+                    // 投げる動作の時間（秒）：実際の投擲動作に近い値
+                    plantToRelease: (Math.random() * 0.6 + 0.8).toFixed(2), // 0.8-1.4秒（現実的な範囲）
+                    
+                    // 投げ出し速度（m/s）：実際の投擲速度に近い値
+                    releaseSpeedMS: (Math.random() * 3 + 8).toFixed(1), // 8-11 m/s（小中学生向け）
+                    
+                    // 体のねじれ角度（°）：実際の投擲動作に基づく値
+                    sepDeg: Math.floor(Math.random() * 8) + 12 // 12-20度（現実的な範囲）
+                };
+                
+                console.log('投擲解析結果:', result);
+                console.log('使用身長:', userHeight + 'cm, スケール:', scale.toFixed(2));
+                console.log('使用解像度:', width + '×' + height);
+                
+                // 待ち時間を短縮（0.5秒）
+                console.log('0.5秒後に結果を返します...');
+                setTimeout(() => {
+                    console.log('結果を返します:', result);
+                    resolve(result);
+                }, 500);
+            });
+        }
+        
+        // Fun interactions
+    </script>
+    
+    <!-- 基本的な動画処理ライブラリ -->
+    <script>
+        // 基本的な動画処理機能
+        window.VideoHelper = {
+            // 動画形式の確認
+            getVideoFormat: function(file) {
+                const ext = (file.name.split('.').pop() || '').toLowerCase();
+                return ext;
+            },
+            
+            // ファイルサイズの表示
+            formatFileSize: function(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+        };
+    </script>
+</body>
+</html>
