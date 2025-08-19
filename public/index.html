@@ -143,7 +143,7 @@
         .javelin-item {
             position: fixed;
             animation: float-items 15s infinite ease-in-out;
-            z-index: 5;
+            z-index: 8;
             cursor: pointer;
             transition: transform 0.3s;
             filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
@@ -194,7 +194,7 @@
             margin: 0 auto;
             padding: 2rem;
             position: relative;
-            z-index: 10;
+            z-index: 15;
         }
         
         /* タイトル */
@@ -202,6 +202,8 @@
             text-align: center;
             margin-bottom: 3rem;
             animation: slideDown 1s ease-out;
+            position: relative;
+            z-index: 20;
         }
         
         @keyframes slideDown {
@@ -1030,8 +1032,8 @@
         
         /* レイヤ順の調整（PC/モバイル共通） */
         .sun, .cloud, .ocean, .wave, .seagull { z-index: 1; }
-        .javelin-item { z-index: 3; }
-        .video-container, .surfboard-card, .results-container, .analyze-button { position: relative; z-index: 5; }
+        .javelin-item { z-index: 8; }
+        .video-container, .surfboard-card, .results-container, .analyze-button { position: relative; z-index: 12; }
         
         /* グローバルズーム防止 */
         html { -webkit-text-size-adjust: 100%; }
@@ -1052,7 +1054,7 @@
     </div>
     
     <!-- ジャベリック用品 -->
-    <svg class="javelin-item javelin-ball" title="ジャベリックボール" viewBox="0 0 150 100" style="width: 100px; height: 67px; top: 25%; left: 10%;">
+    <svg class="javelin-item javelin-ball" title="ジャベリックボール" viewBox="0 0 150 100" style="width: 80px; height: 54px; top: 15%; left: 5%;">
         <!-- ジャベリックボール本体 -->
         <defs>
             <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -1102,7 +1104,7 @@
         <ellipse cx="65" cy="43" rx="12" ry="4" fill="white" opacity="0.6"/>
     </svg>
     
-    <svg class="javelin-item turbo-jav" title="ターボジャブ" viewBox="0 0 300 60" style="width: 180px; height: 36px; top: 35%; right: 15%; transform: rotate(-30deg);">
+    <svg class="javelin-item turbo-jav" title="ターボジャブ" viewBox="0 0 300 60" style="width: 140px; height: 28px; top: 20%; right: 8%; transform: rotate(-25deg);">
         <!-- ターボジャブ本体 -->
         <defs>
             <linearGradient id="turboGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1130,7 +1132,7 @@
         <text x="140" y="35" font-family="Arial Black" font-size="12" fill="white" text-anchor="middle">TURBO</text>
     </svg>
     
-    <svg class="javelin-item javelin-spear" title="やり投げ" viewBox="0 0 400 40" style="width: 200px; height: 20px; top: 20%; left: 50%; transform: rotate(45deg);">
+    <svg class="javelin-item javelin-spear" title="やり投げ" viewBox="0 0 400 40" style="width: 160px; height: 16px; top: 18%; left: 45%; transform: rotate(40deg);">
         <!-- やり投げ用やり -->
         <defs>
             <linearGradient id="spearShaft" x1="0%" y1="0%" x2="100%" y2="0%">
